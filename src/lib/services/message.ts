@@ -17,8 +17,9 @@ interface ApiResponse {
   }
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-const STT_URL = process.env.NEXT_PUBLIC_STT_URL || 'http://localhost:3001';
+// Usar URLs relativas para funcionar com o proxy do Next.js (evita Mixed Content em HTTPS)
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const STT_URL = process.env.NEXT_PUBLIC_STT_URL || '';
 
 const messageService = {
   getMessage: async (request: MessageRequest) => {

@@ -40,8 +40,8 @@ export default function SolicitationHistoryPage() {
             }
 
             try {
-                const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-                const res = await fetch(`${API_BASE_URL}/api/requests`, {
+                // Usar URL relativa para funcionar com o proxy do Next.js
+                const res = await fetch('/api/requests', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',

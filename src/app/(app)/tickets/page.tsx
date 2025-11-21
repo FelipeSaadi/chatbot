@@ -109,8 +109,8 @@ export const TicketsPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [currentStatus, setCurrentStatus] = useState<string>('Todos'); 
     
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    const API_URL = `${API_BASE_URL}/api/requests`;
+    // Usar URL relativa para funcionar com o proxy do Next.js
+    const API_URL = '/api/requests';
 
     useEffect(() => {
         const fetchTickets = async () => {

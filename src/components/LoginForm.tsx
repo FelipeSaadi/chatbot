@@ -23,8 +23,8 @@ const LoginForm: React.FC = () => {
 
     const router = useRouter();
     
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    const API_URL = `${API_BASE_URL}/api/login`; 
+    // Usar URL relativa para funcionar com o proxy do Next.js (evita Mixed Content em HTTPS)
+    const API_URL = '/api/login'; 
 
     const { setRole } = useUser();
 

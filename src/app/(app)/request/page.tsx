@@ -20,8 +20,8 @@ export default function RequestPage() {
   const [requests, setRequests] = useState<Request[]>([]);
 
   useEffect(() => {
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    fetch(`${API_BASE_URL}/api/requests`)
+    // Usar URL relativa para funcionar com o proxy do Next.js
+    fetch('/api/requests')
       .then((res) => res.json())
       .then((data) => {
         // normalize priority values to Portuguese: alta/media/baixa

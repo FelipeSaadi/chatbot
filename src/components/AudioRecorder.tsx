@@ -117,15 +117,45 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('Erro do backend:', errorText);
-                throw new Error(`Falha na requisição ao backend: ${response.statusText} - ${errorText}`);
+                
+                // Tentar parsear o erro do backend
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    if (errorJson.message?.includes('transcrever')) {
+                        throw new Error('🎤 Não foi possível entender o áudio. Verifique se o microfone está funcionando e tente falar mais alto.');
+                    }
+                } catch (parseErr) {
+                    // Se não conseguir parsear, usa mensagem genérica
+                }
+                
+                throw new Error(`Falha ao processar o áudio. Tente novamente.`);
             }
 
             const data: { text: string } = await response.json();
             console.log('Transcrição recebida:', data.text);
+            
+            // Verificar se a transcrição está vazia ou muito curta
+            if (!data.text || data.text.trim().length === 0) {
+                throw new Error('🎤 Nenhum áudio detectado. Verifique se o microfone está ligado e funcionando.');
+            }
+            
+            if (data.text.trim().length < 3) {
+                throw new Error('🎤 Áudio muito curto ou inaudível. Tente falar mais claramente.');
+            }
+            
             onAudioTranscribed(data.text, audioBlob);
         } catch (err: any) {
             console.error('Erro ao enviar áudio:', err);
-            onError(err.message || 'Erro ao enviar áudio para transcrição.');
+            
+            // Mensagens de erro mais amigáveis
+            let errorMessage = err.message || 'Erro ao enviar áudio para transcrição.';
+            
+            // Se for erro de rede
+            if (err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError')) {
+                errorMessage = '🌐 Erro de conexão. Verifique sua internet e tente novamente.';
+            }
+            
+            onError(errorMessage);
         } finally {
             setIsLoading(false);
         }

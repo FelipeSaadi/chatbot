@@ -109,8 +109,9 @@ export const TicketsPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [currentStatus, setCurrentStatus] = useState<string>('Todos'); 
     
-    // Usar URL relativa para funcionar com o proxy do Next.js
-    const API_URL = '/api/requests';
+    // Usar URL relativa em produção, absoluta em desenvolvimento
+    const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+    const API_URL = isProduction ? '/api/requests' : 'http://localhost:8000/api/requests';
 
     useEffect(() => {
         const fetchTickets = async () => {

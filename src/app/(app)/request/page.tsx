@@ -20,8 +20,10 @@ export default function RequestPage() {
   const [requests, setRequests] = useState<Request[]>([]);
 
   useEffect(() => {
-    // Usar URL relativa para funcionar com o proxy do Next.js
-    fetch('/api/requests')
+    // Usar URL relativa em produção, absoluta em desenvolvimento
+    const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+    const apiUrl = isProduction ? '/api/requests' : 'http://localhost:8000/api/requests';
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => {
         // normalize priority values to Portuguese: alta/media/baixa

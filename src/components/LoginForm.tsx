@@ -23,8 +23,9 @@ const LoginForm: React.FC = () => {
 
     const router = useRouter();
     
-    // Usar URL relativa para funcionar com o proxy do Next.js (evita Mixed Content em HTTPS)
-    const API_URL = '/api/login'; 
+    // Usar URL relativa em produção, absoluta em desenvolvimento
+    const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+    const API_URL = isProduction ? '/api/login' : 'http://localhost:8000/api/login'; 
 
     const { setRole } = useUser();
 

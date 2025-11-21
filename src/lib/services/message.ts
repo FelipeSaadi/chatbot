@@ -17,9 +17,11 @@ interface ApiResponse {
   }
 }
 
-// Usar URLs relativas para funcionar com o proxy do Next.js (evita Mixed Content em HTTPS)
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
-const STT_URL = process.env.NEXT_PUBLIC_STT_URL || '';
+// Usar URLs relativas em produção (Vercel) para funcionar com o proxy do Next.js
+// Em desenvolvimento local, usar URLs absolutas
+const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+const API_URL = isProduction ? '' : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000');
+const STT_URL = isProduction ? '' : (process.env.NEXT_PUBLIC_STT_URL || 'http://localhost:3001');
 
 const messageService = {
   getMessage: async (request: MessageRequest) => {

@@ -40,8 +40,10 @@ export default function SolicitationHistoryPage() {
             }
 
             try {
-                // Usar URL relativa para funcionar com o proxy do Next.js
-                const res = await fetch('/api/requests', {
+                // Usar URL relativa em produção, absoluta em desenvolvimento
+                const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+                const apiUrl = isProduction ? '/api/requests' : 'http://localhost:8000/api/requests';
+                const res = await fetch(apiUrl, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',

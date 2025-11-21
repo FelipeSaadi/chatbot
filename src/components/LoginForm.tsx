@@ -81,14 +81,16 @@ const LoginForm: React.FC = () => {
                 <label htmlFor="email" className="block font-semibold mb-2 text-gray-700">Email</label>
                 <input
                     type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required disabled={isLoading}
+                    className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed" required disabled={isLoading}
+                    placeholder="seu@email.com"
                 />
             </div>
             <div>
                 <label htmlFor="password" className="block font-semibold mb-2 text-gray-700">Senha</label>
                 <input
                     type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required disabled={isLoading}
+                    className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed" required disabled={isLoading}
+                    placeholder="••••••••"
                 />
             </div>
 

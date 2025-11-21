@@ -1,11 +1,10 @@
 import ClientHeader from '@/components/ClientHeader';
 
-export default function RootLayout({
+export default function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  
   return (
     <>
       <ClientHeader />

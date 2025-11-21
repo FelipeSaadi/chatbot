@@ -106,7 +106,9 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({
                 type: audioBlob.type
             });
 
-            const STT_URL = process.env.NEXT_PUBLIC_STT_URL || 'http://localhost:3001';
+            // Usar URL relativa em produção, absoluta em desenvolvimento
+            const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+            const STT_URL = isProduction ? '' : (process.env.NEXT_PUBLIC_STT_URL || 'http://localhost:3001');
             const response = await fetch(`${STT_URL}/audio/transcribe`, {
                 method: 'POST',
                 body: formData,

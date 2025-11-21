@@ -1,4 +1,6 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8000/api';
+// Usar URL relativa em produção, absoluta em desenvolvimento
+const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+const API_BASE = isProduction ? '/api' : (process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8000/api');
 
 export async function fetchTotalByService(filters = {}) {
   const url = new URL(`${API_BASE}/dashboard/total-by-service`);
